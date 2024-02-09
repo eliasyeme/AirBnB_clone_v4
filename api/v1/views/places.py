@@ -1,3 +1,4 @@
+
 #!/usr/bin/python3
 """ objects that handle all default RestFul API actions for Places """
 from models.state import State

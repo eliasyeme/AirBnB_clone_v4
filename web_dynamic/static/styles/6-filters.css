@@ -21,9 +21,9 @@ button {
 button:hover {
     opacity: 0.9;
 }
-.filters div {
+/*.filters div {
     display: inline-grid;
-}
+}*/
 .filters h2 {
     margin-left: 15%;
     margin-top: 0;
@@ -40,13 +40,23 @@ button:hover {
     margin-top: 0;
     font-weight: 400;
     font-size: 14px;
+    white-space: nowrap;
+    padding-bottom: 17px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .locations {
+    display: inline-flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
     height: 100%;
     width: 25%;
     border-right: 1px solid #DDDDDD;
 }
 .amenities {
+    display: inline-flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
     height: 100%;
     width: 25%;
 }
@@ -61,6 +71,7 @@ button:hover {
     height: 300px;
     overflow-y: scroll;
     scrollbar-width: none;
+    min-height: 300px;
     max-height: 300px;
 }
 
@@ -70,10 +81,14 @@ button:hover {
 
 .amenities .popover {
     padding: 10px 0;
+    padding-left: 6%;
     margin-left: -5px;
     margin-top: 0%;
 }
 
+.amenities .popover input {
+    margin-right: 10px;
+}
 .amenities .popover ul{
     margin: 0px;
 }

@@ -1,6 +1,9 @@
 function appendPlace(data) {
   $('.places').empty();
-  for (const place of data) {
+  const places = data.toSorted((placeA, placeB) => {
+    return (placeA.name.localeCompare(placeB.name));
+  });
+  for (const place of places) {
     const html = `<article>
                 <div class="title_box">
                   <h2>${place.name}</h2>
@@ -33,32 +36,32 @@ $(document).ready(function () {
       type: 'POST',
       url: 'http://localhost:5001/api/v1/places_search',
       contentType: 'application/json',
-      data: JSON.stringify({ amenities: Object.keys(window.amenities).map(Number) }),
+      data: JSON.stringify({ amenities: Object.keys(amenities) }),
       success: appendPlace
     });
+  });
 
-    const url = `http://${window.location.hostname}:5001/api/v1/status/`;
-    $.get(url, function (data, status) {
-      if (status === 'success') {
-        $('#api_status').addClass('available');
-      } else {
-        $('#api_status').removeClass('available');
-      }
-    });
+  const url = `http://${window.location.hostname}:5001/api/v1/status/`;
+  $.get(url, function (data, status) {
+    if (data.status === 'OK') {
+      $('#api_status').addClass('available');
+    } else {
+      $('#api_status').removeClass('available');
+    }
+  });
 
-    const amenities = {};
-    $('input[type="checkbox"]').change(function () {
-      if ($(this).is(':checked')) {
-        amenities[$(this).attr('data-id')] = $(this).attr('data-name');
-      } else {
-        delete amenities[$(this).attr('data-id')];
-      }
-      const names = Object.values(amenities);
-      if (names.length > 0) {
-        $('.amenities h4').text(names.join(', '));
-      } else {
-        $('.amenities h4').html('&nbsp;');
-      }
-    });
-  })
+  const amenities = {};
+  $('input[type="checkbox"]').change(function () {
+    if ($(this).is(':checked')) {
+      amenities[$(this).attr('data-id')] = $(this).attr('data-name');
+    } else {
+      delete amenities[$(this).attr('data-id')];
+    }
+    const names = Object.values(amenities);
+    if (names.length > 0) {
+      $('.amenities h4').text(names.join(', '));
+    } else {
+      $('.amenities h4').html('&nbsp;');
+    }
+  });
 });

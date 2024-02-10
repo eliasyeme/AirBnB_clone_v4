@@ -1,3 +1,4 @@
+
 #!/usr/bin/python3
 """ objects that handle all default RestFul API actions for Places """
 from models.state import State
@@ -147,17 +148,16 @@ def places_search():
 
     list_places = []
     if states:
-        states_obj = [storage.get(State, s_id) for s_id in states]
-        for state in states_obj:
+        for state_id in states:
+            state = storage.get(State, state_id)
             if state:
                 for city in state.cities:
-                    if city:
-                        for place in city.places:
-                            list_places.append(place)
+                    for place in city.places:
+                        list_places.append(place)
 
     if cities:
-        city_obj = [storage.get(City, c_id) for c_id in cities]
-        for city in city_obj:
+        for city_id in cities:
+            city = storage.get(City, city_id)
             if city:
                 for place in city.places:
                     if place not in list_places:

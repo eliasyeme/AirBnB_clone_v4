@@ -5,7 +5,10 @@ $(document).ready(function () {
     contentType: 'application/json',
     data: '{}',
     success: function (data) {
-      for (const place of data) {
+      const places = data.toSorted((placeA, placeB) => {
+	return (placeA.name.localeCompare(placeB.name));
+      });
+      for (const place of places) {
         const html = `<article>
           <div class="title_box">
             <h2>${place.name}</h2>

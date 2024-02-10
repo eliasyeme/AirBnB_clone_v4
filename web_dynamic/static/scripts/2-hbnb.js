@@ -1,7 +1,7 @@
 $(document).ready(function () {
   const url = `http://${window.location.hostname}:5001/api/v1/status/`;
-  $.get(url, function (data, status) {
-    if (status === 'success') {
+  $.get(url, function (data) {
+    if (data.status === 'OK') {
       $('#api_status').addClass('available');
     } else {
       $('#api_status').removeClass('available');

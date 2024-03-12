@@ -21,7 +21,16 @@ def get_reviews(place_id):
     if not place:
         abort(404)
 
-    reviews = [review.to_dict() for review in place.reviews]
+    reviews = []
+    for review in place.reviews:
+        review_dict = review.to_dict()
+        review_user = storage.get(User, review.user_id)
+        if not review_user:
+            abort(404)
+        user_name = review_user.first_name + ' ' + review_user.last_name
+        review_dict["user"] = user_name
+        review_dict["created_at"] = review.created_at.strftime('%d %B %Y')
+        reviews.append(review_dict)
 
     return jsonify(reviews)
 
